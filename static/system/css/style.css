@@ -1,7 +1,7 @@
 :root{
     --primary: rgb(201,209,72);
     --primary-linear: linear-gradient(90deg, rgba(201,209,72,1) 0%, rgba(209,214,112,1) 50%, rgba(201,209,72,1) 100%);
- 
+    --secondary: #232f56;
 }
 
 
@@ -70,7 +70,7 @@ div.add-post-btn.mb-3{
 }
 .navbar{
     width:100%; 
-    height:8vh;
+    height:10vh;
     background: var(--primary);
     background: var(--primary-linear);
     
@@ -103,7 +103,7 @@ margin-right: 2%;
 }
 .alumni-page-grid{
 display: grid;
-grid-template-columns: 2fr 10fr 2fr;
+grid-template-columns: 3fr 10fr 3fr;
 min-height: 100vh;
 }
 .alumni-sidebar{
@@ -125,3 +125,45 @@ min-height: 100vh;
     padding-right: 1.3%;
     padding-top: 1.3%;
 }
+::-webkit-scrollbar {
+    width: 10px;
+  }
+    ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+    ::-webkit-scrollbar-thumb {
+    background: #888; 
+      border-radius:10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    
+    background: #555; 
+  }
+  .navbar .right .nav-icons{
+    list-style-type: none;
+    display: inline-flex;
+    /* margin-right:2%; */
+    width: 70%;
+    justify-self:flex-end;
+   
+
+  }
+  .navbar .right .nav-icons li{
+    margin-left: 5%;
+  }
+  .navbar .right .nav-icons li a{
+text-decoration: none;
+color: var(--secondary);
+font-weight: bold;
+
+  }
+
+  .navbar .right{
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+    height: 100%;
+
+    
+  }
