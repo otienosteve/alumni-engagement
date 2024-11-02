@@ -1,0 +1,39 @@
+
+{% extends 'base.html' %}
+
+{% block main %}
+  
+<div class="container-fluid">
+<div class="row">
+  <div class="col-md-5  mx-auto login-form">
+
+    
+    <h2 class='text-center'>Firm Roots AES</h2>
+    <img src="{{url_for('static',filename='system/assets/AAKCAU-LOGO.svg')}}" alt="" srcset="">
+    <h3 class="text-center mb-5 wow fadeInUp">Login </h3>
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">          
+
+            {% for message in messages %}
+            <strong>{{ message }}</strong>
+          
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+            {% endif %}
+            {% endwith %}
+           <p class="text-center"> Don't Have an Account? <a href="{{url_for("auth.request_registration")}}" class="link-success">Request Registration</a></p>
+    <form method='POST' action='{{url_for('auth.login')}}' class='form'>
+      {{form.hidden_tag()}}
+      {{form.email.label()}} {{form.email(class='form-control')}} <br /><br />
+      {{form.password.label()}} {{form.password(class='form-control')}} <br /><br />
+      <br>
+      {{form.submit(class='btn btn-primary btn-sm w-100 py-3')}}
+    </form>
+    <br>
+    <p class="text-center">Forgot Password <a href="{{url_for('auth.reset_password')}}" class="link-success">Click to Reset</a> </p>
+  </div>
+</div>
+</div>
+{% endblock main %}

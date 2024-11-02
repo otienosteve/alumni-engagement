@@ -1,0 +1,107 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+        </div>
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="btn btn-primary">Approve</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<h3 class="text-center fw-bold">Register requests</h3>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-8">
+        <div class="table-responsive">
+            <table class='table table-success table-hover'>
+                <thead>
+                    <tr>
+                        <td>Email</td>
+                        <td>Title</td>
+                        <td>First Name</td>
+                        <td>Last name</td>
+                        <td>School</td>
+                        <td >Actions</td>
+                        
+                        
+                        
+                    </tr>
+    </thead>
+
+    {% for request in registration_requests %}
+    <tr>
+        <td>{{request.email |title}}</td>
+        <td>{{request.title.value|title}}</td>
+        <td>{{request.first_name|title}}</td>
+        <td>{{request.last_name|title}}</td>
+        <td>{{request.school|title}}</td>
+        <td><button class="btn-primary btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="{{request.id}}">Details & Approval</button></td>
+
+
+
+
+
+
+    </tr>
+    
+    {% endfor %}
+    
+</table>
+                    
+                </div>
+                </div>
+                </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    var exampleModal = document.getElementById('exampleModal')
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+      // Button that triggered the modal
+      var button = event.relatedTarget
+      // Extract info from data-bs-* attributes
+      var requesterID = button.getAttribute('data-bs-whatever')
+      // If necessary, you could initiate an AJAX request here
+      // and then do the updating in a callback.
+      //
+      // Update the modal's content.
+      const url = window.location.href.split('/').splice(0,4).join('/')
+      const modalBody = document.querySelector('.modal-body')
+console.log(url)
+      fetch(`${url}/ajax-register-request/${requesterID}`).then(res=>res.json()).then(data=> {
+        let details =`
+        <p> Email: ${data.email}</p>
+        <p> Name: ${data.title} ${data.first_name} ${data.last_name}</p>
+
+        
+
+        <p> School: ${data.school}</p>
+
+        
+        `
+        modalBody.innerHTML=details
+
+        modalTitle.textContent = 'Request From ' + data.email
+      }).catch(err=> {
+
+        console.log(err)
+      })
+    
+      var modalTitle = exampleModal.querySelector('.modal-title')
+    
+      
+    })
+    console.log("script...")
+</script>
+
+{% endblock scripts %}

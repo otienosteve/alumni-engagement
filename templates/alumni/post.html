@@ -1,0 +1,37 @@
+{% extends "alumni/alumni-base.html" %}
+{% block content %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Post</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Post Content:</label>
+              <textarea class="form-control" id="message-text" rows=12></textarea>
+            </div>
+            <div class="mb-3">
+                <input type="file" name="fileToUpload[]" id="fileToUpload" multiple="multiple" >
+            </div>
+            <div class="mb-3 add-post-btn">
+
+                <button type="submit" class="btn btn-primary text-end">Add Post</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-btn-section w-100 d-flex justify-content-end">
+
+    <button class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add Post</button>
+  </div>
+    
+
+
+{% endblock content %}
