@@ -44,6 +44,7 @@ class User(db.Model,UserMixin):
     profile = db.relationship('Profile', back_populates='user', uselist=False)
     role = db.relationship(
         'Role',secondary=roles_user,back_populates='user')
+    education = db.relationship('Education', back_populates='user')
     
 class statusEnum(Enum):
     pending = 'pending'
@@ -102,6 +103,19 @@ class Course(db.Model):
     qualification =  db.Column('qualification', db.String(255))
 
 
+
+class Education(db.Model):
+    id = db.Column(db.String(36), nullable=False, unique=True, default=uuid.uuid4, primary_key=True)
+    qualification  = db.Column( db.String(255))
+    institution  = db.Column( db.String(255))
+    name = db.Column( db.String(255))
+    start_date=  db.Column('start_date', db.DateTime, nullable= False)
+    end_date=  db.Column('end_date', db.DateTime)
+    user_id = db.Column(db.String(36), db.ForeignKey('users.id'))
+    user = db.relationship('User', back_populates='education')
+    
+    
+    
 class Events(db.Model):
     __table_name__ = 'events'
     id = db.Column(db.String(36), nullable=False, unique=True, default=uuid.uuid4, primary_key=True)

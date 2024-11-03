@@ -78,7 +78,7 @@ def login():
                 return render_template('auth/login.html', form=form)
             if bcrypt.check_password_hash(user.password, payload.get('password')):
                 login_user(user)
-                flash('Welome to Parish MIS', category='success')
+                flash('Welome to Firm Roots', category='success')
                 return redirect(url_for('admin_bp.dashboard'))
             else:
                 flash('Incorrect Password Entered', 'error')

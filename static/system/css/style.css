@@ -167,3 +167,26 @@ font-weight: bold;
 
     
   }
+  .navbar  .left{
+    display: flex;
+    justify-content:space-between ;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+
+  }
+  .navbar .left .top-search{
+    height: 70%;
+    width:100%;
+  }
+  .navbar  .left .nav-logo{
+    width:100%;
+    height: 100%;
+    overflow: hidden;
+    margin-left: 4%;
+  }
+  .navbar  .left .nav-logo img {
+
+    height: 100%;
+    width: 80%;
+  }
