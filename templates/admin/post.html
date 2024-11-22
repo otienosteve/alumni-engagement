@@ -1,0 +1,115 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body-post text-center">
+            <div class="lds-hourglass"></div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a class="btn btn-primary approve-btn">Approve</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table class="table table-hover table-success">
+<tr>
+    <thead>
+        <th> Title</th>
+        <th> content</th>
+        <th> Posted By</th>
+        <th>Approved</th>
+        <th>Actions</th>
+
+    </thead>
+</tr>
+
+{% for post in posts  %}
+<tr>
+    <td>{{post.title}}</td>
+    
+    {% if post.body %}
+    <td>{{post.body[0:100]}}...</td>
+        
+    {% else %}
+        <td>No post body</td>
+    {% endif %}
+    
+    <td>{{post.user.email}}</td>
+    <td>{{post.approved}}</td>
+    <td><button class="btn-success btn btn-sm" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">Actions</button>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+            <li><button class="dropdown-item active" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-post-id="{{post.id}}">Action</button></li>
+        </ul>
+    </td>
+
+
+</tr>
+
+{% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script>
+
+    var exampleModal = document.getElementById('exampleModal')
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+  
+      var button = event.relatedTarget
+
+      var id = button.getAttribute('data-bs-post-id')
+      var modalTitle = exampleModal.querySelector('.modal-title')
+     var url = window.location.href.split('/').splice(0,4).join('/')+'/ajax-request-post/'+id
+      const contentSection = document.querySelector('.modal-body-post')
+      
+      contentSection.innerHTML='<div class="lds-hourglass"></div>'
+      const approveBtn = document.querySelector('.approve-btn')
+     var approveUrl  = window.location.href.split('/').splice(0,4).join('/')
+      fetch(url).then(res=> res.json()).then(data=> { 
+          let photosSection = ''
+    /*  if(data.post_photos){ 
+        for(let photo of data.post_photos){ 
+            console.log(photo)
+            photosSection+=`
+            <img src='./static/user/images/${photo.photo_url}.jpg' alt='${data.title}''>
+            `
+        }
+      } */
+        let postHtml = `
+        <h3>${data.title}</h3>
+        <p>${data.body}</p>
+        `
+        postHtml+=photosSection
+        console.log(postHtml)
+        contentSection.innerHTML= postHtml
+        modalTitle.textContent=`Post From: ${data.user.email}`
+
+        approveBtn.href=approveUrl+='/approve_post/'+data.id
+     
+    })
+
+    })
+
+</script>
+
+{% endblock scripts %}

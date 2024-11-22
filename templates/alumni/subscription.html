@@ -1,0 +1,111 @@
+{% extends "alumni/alumni-base-2.html" %}
+
+{% block body %}
+
+<div class="modal fade modal-dialog modal-fullscreen-md-down" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Plans</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="lds-hourglass"></div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Send message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<h4 class="text-center">Subscription</h4>
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-user-id="{{user.id}}"> View Plans</button>
+<div class="container">
+  <div class="row">
+      <div class="col-md-7">
+        Subscriptions For: {{user_subscriptions[0].user.email}}
+          <table class="table-success table-hiver table">
+<thead>
+  <tr>
+      <td>Plan</td>
+      <td>Amount</td>
+      <td>Days</td>
+      <td>Subscribed Date</td>
+  </tr>
+</thead>
+<tbody>
+              {% for subscription in user_subscriptions  %}
+<tr>
+  <td>{{subscription.plan.name}}</td>
+  <td>{{subscription.plan.amount}}</td>
+  <td>{{subscription.plan.days}}</td>
+  <td>{{subscription.subscription_date}}</td>
+
+
+  
+</tr>
+              
+              
+              {% endfor %}
+          </tbody>
+          </table>
+          
+                  </div>
+              </div>
+          </div>
+  
+
+  
+
+{% endblock body %}
+
+{% block scripts  %}
+
+<script>
+
+
+    const exampleModal = document.getElementById('exampleModal')
+    if (exampleModal) {
+      exampleModal.addEventListener('show.bs.modal', event => {
+        // Button that triggered the modal
+        const button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        const userId = button.getAttribute('data-bs-user-id')
+        console.log(userId)
+        // If necessary, you could initiate an Ajax request here
+        // and then do the updating in a callback.
+        let rootUrl =window.location.href.split('/').splice(0,4).join('/')
+        const url = rootUrl+'/plans'
+        const modalBody = exampleModal.querySelector('.modal-body')
+        fetch(url).then(res=> res.json()).then(data => {  
+            let PlansCard = '<div class="row"> '
+            for (plan of  data){ 
+                let card =`<div class="col-sm-6 mb-3"><div class="card" style="width: 12rem;">
+         <div class="card-header">
+${plan.name}
+         </div>           
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"> Days: ${plan.days}</li>
+    <li class="list-group-item"> Price: ${plan.amount} </li>
+
+  </ul>
+  <div class="card-footer">
+<a class="btn btn-primary btn-sm" href='${rootUrl}/subscribe/${userId}/${plan.id}''> Subscribe Now</a>
+  </div>
+</div> </div>`   
+PlansCard+=card
+}
+PlansCard+='</div>'
+            modalBody.innerHTML=PlansCard 
+            console.log(PlansCard)
+        })
+        // Update the modal's content.
+      })
+    }
+
+</script>
+
+{% endblock scripts  %}

@@ -4,7 +4,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Delete Education </h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Delete Experience </h5>
       
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -22,7 +22,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Education</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Experience</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -37,19 +37,19 @@
               
             </div>
             <div class="mb-3">
-              <label for="" class="col-form-label">Institution</label>
-              <input type="text" name="institution"  class="form-control">
+              <label for="" class="col-form-label">Organisation</label>
+              <input type="text" name="organisation"  class="form-control">
             </div>
             <div class="mb-3">
-              <label for="" class="col-form-label">Course</label>
-              <input type="text" name="course"  class="form-control">
+              <label for="" class="col-form-label">Job Title</label>
+              <input type="text" name="job-title"  class="form-control">
             </div>
             <div class="mb-3">
-              <label for="" class="col-form-label">Qualification</label>
-              <input type="text" name="qualification"  class="form-control">
+              <label for="" class="col-form-label">description</label>
+              <textarea name="description"  class="form-control" rows=10 ></textarea>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Add Education</button>
+              <button type="submit" class="btn btn-primary">Add experience</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </form>
@@ -57,8 +57,8 @@
       </div>
     </div>
   </div>
-<h3 class="text-center fw-bold">Education</h3>
-<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Add Education</button>
+<h3 class="text-center fw-bold">Experience</h3>
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Add Experience</button>
 <div class="container">
   <div class="row mx-auto">
     <div class="col-md-10">
@@ -80,27 +80,27 @@
             <tr>
               <td>Start Date</td>
               <td>End Date</td>
-              <td>Institution</td>
-              <td>Course</td>
-              <td>Qualification</td>
+              <td>Organisation</td>
+              <td>Job Title</td>
+              <td>Description</td>
               <td>Actions</td>
             </tr>
           </thead>
           
-          {% for education in user_education %}
+          {% for experience in user_experience %}
           <tr>
-            <td>{{education.start_date}}</td>
-            <td>{{education.end_date}}</td>
+            <td>{{experience.start_date}}</td>
+            <td>{{experience.end_date}}</td>
 
-            <td>{{education.institution}}</td>
-            <td>{{education.course}}</td>
+            <td>{{experience.organisation}}</td>
+            <td>{{experience.job_title}}</td>
 
-            <td>{{education.qualification}}</td>
+            <td>{{experience.description[0:50]}} ...</td>
             <td> <button class="btn btn-sm btn-primary" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
             
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li><button class="dropdown-item btn btn-sm btn-primary update-btn">Update</button></li>
-                <li><button  class="dropdown-item btn btn-sm btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-bs-details="{{education.id}}/{{education.institution}}/{{education.course}}">Delete</button></li>
+                <li><button  class="dropdown-item btn btn-sm btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-bs-details="{{experience.id}}/{{experience.job_title}}/{{experience.organisation}}">Delete</button></li>
               </ul></td>
 
 
@@ -145,13 +145,13 @@ deleteBtns.forEach( button => {
 
 button.addEventListener('click', (e)=> { 
 
-  const [id, institution,course ] = e.target.getAttribute('data-bs-details').split('/')
-  console.log(id, course, institution)
+  const [id, job_title,organisation ] = e.target.getAttribute('data-bs-details').split('/')
+  console.log(id, job_title, organisation)
   const modalDeleteBody = document.querySelector('.modal-delete-body')
-  const paragraph = `<p class='fw-bold ml-5'>Delete ${course} at ${institution}</p>`
+  const paragraph = `<p class='fw-bold ml-5'>Delete ${job_title} at ${organisation}</p>`
 modalDeleteBody.innerHTML=paragraph 
 const deleteButton = document.querySelector('.delete-btn')
-const url=window.location.href.split('/').splice(0,4).join('/')+'/delete_education/'+id
+const url=window.location.href.split('/').splice(0,4).join('/')+'/delete_experience/'+id
 deleteButton.href=url
 
 })

@@ -1,28 +1,42 @@
 {% extends "base.html" %}
 {% block main %}
 
-<nav class="navbar">
-    <div class="left"> 
-        <div class="nav-logo">
-            <img src="{{url_for('static', filename='system/assets/AAKCAU-LOGO.svg')}}" alt="" sizes="" srcset="">
-        </div>
-        <input type="text" class="form-control top-search" placeholder='search'>
-    </div> 
-    <div class="right">
-        <ul class='nav-icons'>
-            <li> <a href=""> <i class="fas fa-briefcase"></i> Experience </a></li>
-           <li> <a href=""><i class="fas fa-user-graduate"></i> Education </a></li>
-          <li> <a href=""><i class="fas fa-bell"></i> Notifications </a></li> 
-       <li><i class="fas fa-user-circle"></i></li>
-        </ul> 
-    </div>
-    </nav>
 
-    {% block body  %}
-    
-    
-    
-    {% endblock body  %}
+    <div class="user-page-grid">
+
+        <div class="user-dashboard-sidebar">
+            <div class="sidebar-logo">
+                
+                    <img src="{{url_for('static', filename='system/assets/AAKCAU-LOGO.svg')}}" alt="" sizes="" srcset="">
+                        
+            </div>
+            <ul>
+                <li class="mb-1 alumni-sidebar-link"><i class="fas fa-university"></i><a class="link-dark rounded" href="{{url_for('alumni_bp.education')}}"> Education </a></li>
+                <li class="mb-1 alumni-sidebar-link"><i class="fas fa-briefcase"></i><a class="link-dark rounded" href="{{url_for('alumni_bp.experience')}}"> Experience </a></li>
+                <li class="mb-1 alumni-sidebar-link"><i class="fas fa-chalkboard-teacher"></i><a class="link-dark rounded" href=""> Mentorship </a></li>
+                <li class="mb-1 alumni-sidebar-link"><i class="fas fa-comment-alt"></i><a class="link-dark rounded" href=""> Posts </a></li>
+                <li class="mb-1 alumni-sidebar-link"><i class="fas fa-wallet"></i><a class="link-dark rounded" href="{{url_for('alumni_bp.subscription')}}"> Subscription </a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <nav class="navbar">
+                <div class="right">
+                    <ul class='nav-icons'>
+                        <li> <a href="{{url_for('alumni_bp.experience')}}"> <i class="fas fa-briefcase"></i> Experience </a></li>
+                        <li> <a href="{{url_for('alumni_bp.education')}}"><i class="fas fa-user-graduate"></i> Education </a></li>
+                       <li> <a href=""><i class="fas fa-bell"></i> Notifications </a></li> 
+                    <li><a href="{{url_for('alumni_bp.profile')}}"><i class="fas fa-user-circle"></i></a></li>
+                    </ul> 
+                </div>
+                </nav>
+            {% block body  %}
+            
+            
+            
+            {% endblock body  %}
+        </div>
+    </div>
 
 
 {% endblock main %}

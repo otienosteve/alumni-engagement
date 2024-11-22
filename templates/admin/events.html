@@ -1,0 +1,160 @@
+{% extends "admin/admin-base.html" %}
+
+
+{% block content %}
+<!-- Vertically centered scrollable modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">New Event</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method='POST' enctype='multipart/form-data'>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Name:</label>
+              <input type="text" class="form-control" name="name">
+            </div>
+            <div class="mb-3">
+              <label for="description" class="col-form-label">Description:</label>
+              <textarea class="form-control"name="description"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Start Date:</label>
+                <input type="datetime-local" class="form-control" name="start-date">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">End Date:</label>
+                <input type="datetime-local" class="form-control" name="end-date">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Event Banner:</label>
+                <input type="file" class="form-control" name="image">
+              </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value='Add Event'>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" tabindex="-1" id='exampleModal2'>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Event</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body-delete">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+            <a  class="btn btn-danger delete-event-btn">Delete Event</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<h4 class="text-center">Events</h4>
+<button class="btn btn-primary add-event" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add Event</button>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{category}}" role="alert">
+                      <strong>{{message}}</strong>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+<div class="table-responsive">
+
+    <table class="table-success table table-hover">
+<thead>
+    <tr>
+        <td>Image</td>
+        <td>Name</td>
+        <td>Description</td>
+
+        <td>Start Date</td>
+        <td>End Date</td>
+        <td>Actions</td>
+    </tr>
+</thead>
+<tbody>
+    
+    {% for event in events  %}
+        
+    
+    <tr>
+        
+        <td class='cell-image'> 
+    <img class="card-img-top" src="{{url_for('static',filename='/user/images/'+event.image)}}" alt="">
+
+        </td>
+        <td> {{event.name}}</td>
+        <td>{{event.description}}</td>
+
+        <td>{{event.start_date}}</td>
+        <td>{{event.end_date}}</td>
+        <td> <button class="btn-primary btn btn-sm dropdown-toggle" role="button" data-bs-toggle="dropdown" >Actions</button>
+        
+            <ul class="dropdown-menu">
+                <li><button class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal2" data-bs-event="{{event.id}}/{{event.name}}">Delete</button></li>
+              </ul>
+        </td>
+        
+    </tr>
+    {% endfor %}
+</tbody>
+
+    </table>
+</div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+
+    const exampleModal = document.getElementById('exampleModal2')
+    if (exampleModal) {
+      exampleModal.addEventListener('show.bs.modal', event => {
+        // Button that triggered the modal
+        const button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        const [id,name] = button.getAttribute('data-bs-event').split('/')
+        // If necessary, you could initiate an Ajax request here
+        // and then do the updating in a callback.
+    
+        // Update the modal's content.
+        const modalTitle = exampleModal.querySelector('.modal-title')
+        const modalBody = exampleModal.querySelector('.modal-body-delete')
+    
+        modalTitle.textContent = `Delete Event: ${name}`
+        modalBody.innerHTML = "Permanently Delete "+name
+        const href = window.location.href.split('/').splice(0,4).join('/')+'/delete_event/'+id
+        console.log(href)
+        const deleteLink = document.querySelector('.delete-event-btn')
+        deleteLink.href= href
+        console.log(deleteLink)
+    
+      })
+    }
+</script>
+
+
+{% endblock scripts %}

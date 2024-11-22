@@ -44,7 +44,7 @@ def register():
         if form.validate_on_submit():
             code = generate_confirmation_code()
             password = generate_confirmation_code()
-            hashed_password = bcrypt.generate_password_hash(password)
+            hashed_password = bcrypt.generate_password_hash('12345678')
             new_user = User(email=form.data.get('email'),password=hashed_password, confirmation_code=code)
             school = School(name=form.data.get('school'))
             new_user.school.append(school)   
@@ -79,7 +79,7 @@ def login():
             if bcrypt.check_password_hash(user.password, payload.get('password')):
                 login_user(user)
                 flash('Welome to Firm Roots', category='success')
-                return redirect(url_for('admin_bp.dashboard'))
+                return redirect(url_for('alumni_bp.index'))
             else:
                 flash('Incorrect Password Entered', 'error')
                 return render_template('auth/login.html', form=form)

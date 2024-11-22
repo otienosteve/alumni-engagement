@@ -9,16 +9,20 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form method='POST' action="{{url_for('alumni_bp.add_post')}}" enctype="multipart/form-data">
             <div class="mb-3">
-              <label for="message-text" class="col-form-label">Post Content:</label>
-              <textarea class="form-control" id="message-text" rows=12></textarea>
+              <label for="title" class="col-form-label">Title:</label>
+              <input type="text" name="title" id="title" class='form-control'>
             </div>
             <div class="mb-3">
-                <input type="file" name="fileToUpload[]" id="fileToUpload" multiple="multiple" >
+              <label for="body" class="col-form-label">Post Content:</label>
+              <textarea class="form-control" id="body" rows=12 name='body'></textarea>
             </div>
+            <div class="mb-3">
+                <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                <input class="form-control" type="file" id="formFileMultiple" multiple name='files'>
+              </div>
             <div class="mb-3 add-post-btn">
-
                 <button type="submit" class="btn btn-primary text-end">Add Post</button>
             </div>
           </form>
@@ -31,7 +35,28 @@
 
     <button class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add Post</button>
   </div>
-    
+  
+  <div class="post-display">
 
+    
+    {% for post in posts  %}
+    <div class="card post-card" >
+      <div class="card-header">
+        <p class="fw-bold mx-2 d-flex justify-content-sm-between"> <span>{{post.user.email}}</span>  <span>{{post.date_posted}}</span></p> 
+      
+      </div>
+  {% for photo in  post.post_photos %}
+    <img class="card-img-top" src="{{url_for('static',filename='/user/images/'+photo.photo_url)}}" alt="">
+  
+    {% endfor %}
+    <div class="card-body">
+    <h4 class='card-title'>{{post.title}}</h4>
+    <p class="card-text">{{post.body}}</p>
+  </div>
+</div>
+
+{% endfor %}
+
+</div>
 
 {% endblock content %}

@@ -1,0 +1,41 @@
+{% extends "admin/admin-base.html" %}
+
+{% block content %}
+
+<h4 class='text-center fw-bold'>Subscription</h4>
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <table class="table-success table-hiver table">
+<thead>
+    <tr>
+        <td>Plan</td>
+        <td>User</td>
+        <td>Amount</td>
+        <td>Days</td>
+        <td>Subscribed Date</td>
+    </tr>
+</thead>
+<tbody>
+                {% for subscription in subscriptions  %}
+<tr>
+    <td>{{subscription.plan.name}}</td>
+    <td>{{subscription.user.email}}</td>
+    <td>{{subscription.plan.amount}}</td>
+    <td>{{subscription.plan.days}}</td>
+    <td>{{subscription.subscription_date}}</td>
+
+
+    
+</tr>
+                
+                
+                {% endfor %}
+            </tbody>
+            </table>
+            
+                    </div>
+                </div>
+            </div>
+    
+{% endblock content %}

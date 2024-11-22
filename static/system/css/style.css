@@ -4,7 +4,10 @@
     --secondary: #232f56;
 }
 
-
+.modal-footer{
+  display:flex;
+  justify-content: space-between;
+}
 body{
     background: rgb(201,209,72);
     background: linear-gradient(90deg, rgba(201,209,72,1) 0%, rgba(209,214,112,1) 50%, rgba(201,209,72,1) 100%);
@@ -59,8 +62,9 @@ div.add-post-btn.mb-3{
     grid-template-columns: 1fr 8fr;
 
 }
+
 .sidebar{
-    background-color: blue;
+    background-color:rgb(8, 148, 8);
     width:100%;
     height: 100%;
 }
@@ -109,14 +113,28 @@ min-height: 100vh;
 .alumni-sidebar{
     height: 100%;
     background-color: green;
+    /* position:fixed; */
 
 }
 .alumni-feed{
     height: 100%;
     background-color: blue;
-    overflow-y: scroll;
+}
+.post-display{
+  display:grid;
+  grid-template-columns: 1fr;
+  padding-left: 20%;
+  padding-right:  15%;
+  width:100%;
+  overflow: scroll;
 
 }
+.post-card{
+  width:90%;
+  margin-bottom: 2rem;;
+
+}
+
 .alumni-right{
     height: 100%;
     background-color: red;
@@ -190,3 +208,81 @@ font-weight: bold;
     height: 100%;
     width: 80%;
   }
+  .lds-hourglass {
+    /* change color here */
+    color: #1c4c5b
+  }
+  .lds-hourglass,
+  .lds-hourglass:after {
+    box-sizing: border-box;
+  }
+  .lds-hourglass {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-hourglass:after {
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    margin: 8px;
+    box-sizing: border-box;
+    border: 32px solid currentColor;
+    border-color: currentColor transparent currentColor transparent;
+    animation: lds-hourglass 1.2s infinite;
+  }
+  @keyframes lds-hourglass {
+    0% {
+      transform: rotate(0);
+      animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+    50% {
+      transform: rotate(900deg);
+      animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    100% {
+      transform: rotate(1800deg);
+    }
+  }
+
+  .user-page-grid{
+    display:grid;
+    grid-template-columns: 2fr 14fr;
+  }
+  .user-page-grid > .user-dashboard-sidebar{
+    background-color:green;
+    height: 100vh;
+  }
+.alumni-sidebar-link{
+  list-style-type: none;
+  
+}
+.alumni-sidebar-link a{
+  margin-left:0.5rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+.sidebar-logo{
+  width:100%;
+  height:30%;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar-logo   img {
+
+width:70%;
+height:70%;
+}
+
+.sidebar-logo a {
+height:50%;
+}
+
+.cell-image {
+  width:150px;
+height: 150px;
+}

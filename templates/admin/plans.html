@@ -1,0 +1,134 @@
+{% extends "admin/admin-base.html" %}
+
+
+{% block content %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Plan</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete plan <span class='display-plan'></span>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a  class="btn btn-primary delete-plan-link">Delete Plan</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Plan</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method='POST'>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Name:</label>
+              <input type="text" class="form-control" name="name">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Days:</label>
+              <input type="number" class="form-control" name="days">
+              
+            </div>
+            <div class="mb-3">
+                <label for="message-text" class="col-form-label">Amount (KES):</label>
+                <input type="number" class="form-control" name="amount">
+                
+              </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value='Add Plan'>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+        <h4 class="text-center">Plans</h4>
+        <button class="btn btn-primary w-25" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add plan</button>
+        
+        <div class="col-md-10">
+            <div class="table-responsive">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{category}}" role="alert">
+                      <strong>{{message}}</strong>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+            <div class="table-responsive">
+                <table class="table table-responsive table-hover table-success">
+
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Days</td>
+                            <td>Amount (KES)</td>
+                            <td>Actions</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for plan in plans  %}
+                        <tr>
+
+                            <td>{{plan.name}}</td>
+                            <td>{{plan.days}}</td>
+                            
+                            <td>{{plan.amount}}</td>
+                            <td><button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions</button>
+                            
+                                <div class="dropdown-menu">
+                                    <button clbuttonss="dropdown-item" href="#" >Update</button>
+                                   <button class="dropdown-item delete-plan-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2" data-bs-plan="{{plan.id}}/{{plan.name}}">Delete</button>
+                                </div>
+                                </td>
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+                    </div>
+                </div>
+              </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script>
+const deletePlanBtn = document.querySelector('.delete-plan-btn')
+console.log(deletePlanBtn)
+
+deletePlanBtn.addEventListener('click', (e)=> {  
+    console.log(e.target)
+const [id, name]  = e.target.getAttribute('data-bs-plan').split('/')
+
+const deletePlanLink = document.querySelector('.delete-plan-link')
+let url= window.location.href.split('/').splice(0,4).join('/')+'/delete_plan/'+id
+console.log(url)
+deletePlanLink.href = url
+
+})
+
+
+</script>
+
+{% endblock scripts %}

@@ -31,9 +31,8 @@
             <div class="collapse" id="dashboard-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                   <li><i class="far fa-plus-square"></i><a href="#" class="link-dark rounded">Create</a> </li>
-                <li><i class="far fa-thumbs-up"></i><a href="#" class="link-dark rounded">Approved</a></li>
-                <li> <i class="fas fa-spinner"></i><a href="#" class="link-dark rounded">Pending</a></li>
-                <li> <i class="far fa-thumbs-down"></i><a href="#" class="link-dark rounded">Rejected</a></li>
+                <li><i class="far fa-thumbs-up"></i><a href="{{url_for('admin_bp.posts', approved=True)}}" class="link-dark rounded">Approved</a></li>
+                <li> <i class="fas fa-spinner"></i><a href="{{url_for('admin_bp.posts', approved=False)}}" class="link-dark rounded">Pending</a></li>
               </ul>
             </div>
           </li>
@@ -43,9 +42,8 @@
             </button>
             <div class="collapse" id="event-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><i class="far fa-plus-square"></i><a href="#" class="link-dark rounded">New Event</a></li>
-                <li><i class="far fa-calendar-alt"></i><a href="#" class="link-dark rounded">Upcoming Events</a> </li>
-                <li><i class="fas fa-calendar-week"></i><a href="#" class="link-dark rounded">Past Events</a> </li>
+                <li><i class="far fa-calendar-alt"></i><a href="{{url_for('admin_bp.events')}}" class="link-dark rounded"> Events</a> </li>
+               
 
               </ul>
             </div>
@@ -68,9 +66,9 @@
           </button>
           <div class="collapse" id="subscription-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-              <li><i class="fas fa-wallet"></i> <a href="" class="link-dark rounded">All</a></li>
-              <li><i class="fas fa-hands-helping"></i> <a href="" class="link-dark rounded">Paid</a></li>
-              <li><i class="fas fa-spinner"></i><a href="#" class="link-dark rounded">Pending</a></li>
+              <li><i class="fas fa-file-invoice-dollar"></i> <a href="{{url_for('admin_bp.plans')}}" class="link-dark rounded">Plans</a></li>
+              <li><i class="fas fa-hands-helping"></i> <a href="{{url_for('admin_bp.subscription',status='paid')}}" class="link-dark rounded">Paid</a></li>
+              <li><i class="fas fa-spinner"></i><a href="{{url_for('admin_bp.subscription',status='pending')}}" class="link-dark rounded">Pending</a></li>
 
             </ul>
           </div>
